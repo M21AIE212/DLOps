@@ -1,37 +1,56 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Define the activation functions
 def sigmoid(x):
-  return 1 / (1 + np.exp(-x))
-
-def relu(x):
-  return x * (x > 0)
-
-def leaky_relu(x, alpha=0.01):
-  return x * (x > 0) + alpha * x * (x <= 0)
+    return 1 / (1 + np.exp(-x))
 
 def tanh(x):
-  return (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
+    return np.tanh(x)
 
-# Generate random data
-random_values = [-3.5, -1.2, 0, 2.8, -4.1, 1.5, -0.7, 3.2, -2.4, 4.6]
+def relu(x):
+    return np.maximum(0, x)
 
-# Generate plots for each activation function
-x = np.linspace(-5, 5, 100)  # Create a range of x-values for plotting
+def leaky_relu(x, alpha=0.01):
+    return np.where(x > 0, x, x * alpha)
 
-plt.figure(figsize=(10, 6))
+# Generate a range of values
+x = np.linspace(-10, 10, 100)
 
-plt.plot(x, sigmoid(x), label='Sigmoid')
-plt.plot(x, relu(x), label='ReLU')
-plt.plot(x, leaky_relu(x), label='Leaky ReLU')
-plt.plot(x, tanh(x), label='Tanh')
+# Plot each activation function in a separate graph
+plt.figure(figsize=(12, 9))
 
-plt.xlabel('Input Value')
-plt.ylabel('Output Value')
-plt.title('Activation Functions')
-plt.legend()
+# Sigmoid
+plt.subplot(2, 2, 1)
+plt.plot(x, sigmoid(x), label='Sigmoid', color='blue', linewidth=2)
+plt.title('Sigmoid Function')
+plt.xlabel('Input')
+plt.ylabel('Output')
+plt.grid(True)
+
+# Tanh
+plt.subplot(2, 2, 2)
+plt.plot(x, tanh(x), label='Tanh', color='red', linewidth=2)
+plt.title('Tanh Function')
+plt.xlabel('Input')
+plt.ylabel('Output')
+plt.grid(True)
+
+# ReLU
+plt.subplot(2, 2, 3)
+plt.plot(x, relu(x), label='ReLU', color='green', linewidth=2)
+plt.title('ReLU Function')
+plt.xlabel('Input')
+plt.ylabel('Output')
+plt.grid(True)
+
+# Leaky ReLU
+plt.subplot(2, 2, 4)
+plt.plot(x, leaky_relu(x), label='Leaky ReLU', color='purple', linewidth=2)
+plt.title('Leaky ReLU Function')
+plt.xlabel('Input')
+plt.ylabel('Output')
 plt.grid(True)
 
 plt.tight_layout()
 plt.show()
-
